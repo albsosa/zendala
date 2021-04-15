@@ -14,7 +14,7 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                         <ul className="navbar-nav ml-auto">
-                            <NavLink className="nav-item mx-0 mx-lg-1"  to={'/login'}  activeClassName="activo">Login</NavLink>
+                            <NavLink className="nav-item mx-0 mx-lg-1"  to={'/login'}  activeClassName="activo">Lista de clientes</NavLink>
                         </ul>
                 </div>
                 

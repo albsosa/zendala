@@ -1,34 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 const axios = require('axios');
 
 
-class ListaClientes extends Component {
+const ListaClientes = () =>  {
+    const [state, setState] = useState({clientes: []})
 
-    mostrarClientes = () => {
-        axios.get('https://apizendalanodejs.herokuapp.com/api/users').then(res=>{         
-                   
-        const clientes = res.data.map(obj => ({name: obj.name, last_name: obj.last_name}));
-        if(clientes.length === 0) return null;
-        return (
-            <React.Fragment>
-                {Object.keys(clientes).map(cliente =>(
-                    <tr key= {cliente}>
-                        <td>{cliente.id}</td>
-                        <td>{cliente.name}</td>
-                        <td>{cliente.last_name}</td>
-                    </tr>
-                ))}
-            </React.Fragment>
-        )
-        
+
+  const  mostrarClientes = () => {
+        axios.get('https://apizendalanodejs.herokuapp.com/api/users').then(res=>{ 
+            setState({clientes: res.data});                              
         });
-       
-
     
     }
-
-
-    render() { 
+    mostrarClientes();
         return (
         <div>
             <section className="mt-5 page-section" id="contact">
@@ -48,14 +32,19 @@ class ListaClientes extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.mostrarClientes() }
+                        {state.clientes.map(cliente =>(
+                            <tr key= {cliente.id}>
+                                <td>{cliente.id}</td>
+                                <td>{cliente.name}</td>
+                                <td>{cliente.last_name}</td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table> 
                 </div>
             </section>
         </div>            
         );
-    }
 }
  
 export default ListaClientes;

@@ -1,77 +1,49 @@
-import React, { Component } from 'react';
-class Login extends Component {
-    nombreMascotaRef = React.createRef();
-    propietarioRef  = React.createRef();
-    fechaRef = React.createRef();
-    horaRef = React.createRef();
-    sintomasRef = React.createRef();
-
-    crearNuevaCliente = (e) => {
+import React from 'react';
+import './Login.css'; 
+import icono from '../icono.png';
+const axios = require('axios');
+const Login  = ({login}) => {
+const userRef = React.createRef();
+const passwordRef  = React.createRef();
+    
+  const  loginZendala = (e) => {
         e.preventDefault();
-
         //crear el objeto
-            const nuevaCliente = {
-                mascota : this.nombreMascotaRef.current.value,
-                propietario : this.propietarioRef.current.value,
-                fecha : this.fechaRef.current.value,
-                hora : this.horaRef.current.value,
-                sintomas : this.sintomasRef.current.value
-            }
-           
-        //enviarlo props
-            this.props.crearCliente(nuevaCliente);
+            const valueslogin = {
+                user : userRef.current.value,
+                password : passwordRef.current.value
+            }           
+        //enviarlo
+        axios.post('https://apizendalanodejs.herokuapp.com/api/login', valueslogin)
+        .then(function (response) {
+           console.log(response);
+           login()
+        })
+        .catch(function (error) {
+           console.log(error)
+        }); 
         //resetear formulario
             e.currentTarget.reset();
-
-
     }
-    render() {
         return(
-        <div className="card mt-5">
-                <div className="card-body mt-5">
-                    <h2 className="card-title text-center mb-5">Login</h2>
-                    <form onSubmit={this.crearNuevaCliente}>
-                        <div className="form-group row">
-                            <label className="col-sm-4 col-lg-2 col-form-label">Nombre Mascota</label>
-                            <div className="col-sm-8 col-lg-10">
-                                <input ref={this.nombreMascotaRef} type="text" className="form-control" placeholder="Nombre Mascota" />
-                            </div>
+            <div>
+                <section className="mt-5 page-section" id="contact">
+                <div className="wrapper fadeInDown">
+                    <div id="formContent">
+                        <div className="fadeIn first">
+                        <img src={icono} id="icon"  alt="User Icon" />
                         </div>
-                        <div className="form-group row">
-                            <label className="col-sm-4 col-lg-2 col-form-label">Nombre Dueño</label>
-                            <div className="col-sm-8 col-lg-10">
-                                <input ref={this.propietarioRef} type="text" className="form-control"  placeholder="Nombre Dueño de la Mascota" />
-                            </div>
-                        </div>
-
-                         <div className="form-group row">
-                            <label className="col-sm-4 col-lg-2 col-form-label">Fecha</label>
-                            <div className="col-sm-8 col-lg-4  mb-4 mb-lg-0">
-                                <input ref={this.fechaRef} type="date" className="form-control" />
-                            </div>
-
-                            <label className="col-sm-4 col-lg-2 col-form-label">Hora</label>
-                            <div className="col-sm-8 col-lg-4">
-                                <input ref={this.horaRef} type="time" className="form-control" />
-                            </div>
-                        </div>
-
-                        <div className="form-group row">
-                            <label className="col-sm-4 col-lg-2 col-form-label">Sintomas</label>
-                            <div className="col-sm-8 col-lg-10">
-                                <textarea ref={this.sintomasRef}  className="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div className="form-group row justify-content-end">
-                            <div className="col-sm-3">
-                                <button type="submit" className="btn btn-success w-100">Agregar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-        </div>
+                        <form  onSubmit={loginZendala}>
+                            <input type="text" id="login" className="fadeIn second" ref={userRef}  placeholder="user" />
+                            <input type="text" id="password" className="fadeIn third" ref={passwordRef}  placeholder="password" />
+                            <input type="submit" className="fadeIn fourth" value="Log In" />
+                        </form>
+                    </div>
+                    </div>
+                </section>
+            </div>
         )
-    }
+    
 }
  
 export default Login;
