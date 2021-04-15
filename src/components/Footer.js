@@ -12,7 +12,6 @@ class Footer extends Component {
                     <div className="container"><small>Copyright © Alberto Sosa</small></div>
                 </div>
             </div>
-          
         )
     }
 }export default Footer;
